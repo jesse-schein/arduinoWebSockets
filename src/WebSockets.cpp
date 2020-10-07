@@ -238,7 +238,7 @@ bool WebSockets::sendFrame(WSclient_t * client, WSopcode_t opcode, uint8_t * pay
     // try to send data in one TCP package (only if some free Heap is there)
     if(!headerToPayload && ((length > 0) && (length < 1400)) && (GET_FREE_HEAP > 6000)) {
         DEBUG_WEBSOCKETS("[WS][%d][sendFrame] pack to one TCP package...\n", client->num);
-        uint8_t * dataPtr = (uint8_t *)malloc(length + WEBSOCKETS_MAX_HEADER_SIZE);
+        uint8_t * dataPtr = (uint8_t *)ps_malloc(length + WEBSOCKETS_MAX_HEADER_SIZE);
         if(dataPtr) {
             memcpy((dataPtr + WEBSOCKETS_MAX_HEADER_SIZE), payload, length);
             headerToPayload = true;
@@ -448,7 +448,7 @@ void WebSockets::handleWebsocketCb(WSclient_t * client) {
 
     if(header->payloadLen > 0) {
         // if text data we need one more
-        payload = (uint8_t *)malloc(header->payloadLen + 1);
+        payload = (uint8_t *)ps_malloc(header->payloadLen + 1);
 
         if(!payload) {
             DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] to less memory to handle payload %d!\n", client->num, header->payloadLen);
@@ -567,7 +567,7 @@ String WebSockets::acceptKey(String & clientKey) {
  */
 String WebSockets::base64_encode(uint8_t * data, size_t length) {
     size_t size   = ((length * 1.6f) + 1);
-    char * buffer = (char *)malloc(size);
+    char * buffer = (char *)ps_malloc(size);
     if(buffer) {
         base64_encodestate _state;
         base64_init_encodestate(&_state);

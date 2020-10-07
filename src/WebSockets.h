@@ -57,7 +57,7 @@
 
 #if defined(ESP8266) || defined(ESP32)
 
-#define WEBSOCKETS_MAX_DATA_SIZE (15 * 1024)
+#define WEBSOCKETS_MAX_DATA_SIZE (1048576)
 #define WEBSOCKETS_USE_BIG_MEM
 #define GET_FREE_HEAP ESP.getFreeHeap()
 // moves all Header strings to Flash (~300 Byte)
@@ -88,7 +88,7 @@
 #define WEBSOCKETS_YIELD_MORE()
 #endif
 
-#define WEBSOCKETS_TCP_TIMEOUT (5000)
+#define WEBSOCKETS_TCP_TIMEOUT (15000)
 
 #define NETWORK_ESP8266_ASYNC (0)
 #define NETWORK_ESP8266 (1)
